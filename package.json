@@ -1,0 +1,69 @@
+{
+  "name": "API Rest DUMmy",
+  "version": "1.0.0",
+  "description": "API taking hexagonal as architecture",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node dist/src/main.js",
+    "dev": "tsnd --respawn src/server.ts",
+    "test": "npm run test:unit",
+    "test:unit": "NODE_ENV=test jest --coverage",
+    "prepare": "husky install",
+    "lint": "eslint --ignore-path .gitignore . --ext .js,.ts",
+    "lint:fix": "npm run lint -- --fix",
+    "build": "npm run build:clean && npm run build:tsc",
+    "build:clean": "rimraf dist; exit 0",
+    "build:tsc": "tsc -p tsconfig.prod.json",
+    "sonar": "sonar-scanner"
+  },
+  "keywords": [
+    "typescript",
+    "express",
+    "skeleton"
+  ],
+  "author": "darinel.escobar@outlook.com",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.3.0"
+  },
+  "bugs": {},
+  "homepage": "",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "@types/amqplib": "^0.10.1",
+    "@types/express": "^4.17.15",
+    "@types/jest": "^29.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "husky": "^8.0.3",
+    "jest": "^29.3.1",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.3",
+    "rimraf": "^4.0.4",
+    "sonarqube-scanner": "^3.0.1",
+    "ts-jest": "^29.0.5",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.4"
+  },
+  "lint-staged": {
+    "*.(js|ts)": [
+      "npm run lint:fix"
+    ]
+  },
+  "dependencies": {
+    "@types/signale": "^1.4.4",
+    "amqplib": "^0.10.3",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.2.4",
+    "signale": "^1.4.0"
+  }
+}

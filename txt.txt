@@ -1,0 +1,9 @@
+"{
+  "id": "123",
+  "type": "warning",
+  "description": "This is a warning alert.",
+  "dateTime": "2023-06-26T10:30:00Z",
+  "severity": "low",
+  "status": "open",
+  "affectedUserId": "John Doe"
+}" 
