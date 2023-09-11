@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import jwt from 'jsonwebtoken';
 import { LoginUseCase } from "../../application/LoginUseCase";
 
 export class LoginUserController {
@@ -7,10 +8,13 @@ export class LoginUserController {
   async run(req: Request, res: Response) {
     try {
       const { mail, password } = req.params;
-      console.log(`🤨😶🤐|| 🥓 file: LoginUserController.ts:10 🥓 LoginUserController 🥓 run 🥓 req.params||`, req.params)
+      console.log(`🤨😶🤐|| 🥓 file: LoginUserController.ts:10 🥓 LoginUserController 🥓 run 🥓 req.params||`, req.params);
       const user = await this.loginUseCase.run(mail, password);
-
+  
       if (user) {
+        // Genera un token JWT
+        const token = jwt.sign({ userId: user.id }, 'DummySecurity', { expiresIn: '1h' }); 
+  
         res.status(200).send({
           status: "success",
           data: {
@@ -18,6 +22,7 @@ export class LoginUserController {
             name: user.name,
             password: user.password,
             mail: user.mail,
+            token, 
           },
         });
       } else {
@@ -34,4 +39,5 @@ export class LoginUserController {
       });
     }
   }
+  
 }
