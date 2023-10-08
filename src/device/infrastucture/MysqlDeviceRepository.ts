@@ -13,7 +13,6 @@ export class MysqlDeviceRepository implements DeviceRepository {
       const result = await query(sql, params);
       const devicesData = Object.values(JSON.parse(JSON.stringify(result)));
 
-      // Imprimir el resultado en la consola
       console.log("Resultado de la consulta:", devicesData);
 
       return devicesData.map((device: any) => new Device(device.id, device.idUser, device.name, device.description));

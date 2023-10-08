@@ -33,7 +33,7 @@ export class MysqlUsersRepository implements UsersRepository {
     password: string,
     mail: string
   ): Promise<Users | null> {
-    const sql = "INSERT INTO usuario (name, password, mail) VALUES (?, ?, ?)";
+    const sql = "INSERT INTO Users (name, password, mail) VALUES (?, ?, ?)";
     const params: any[] = [name, password, mail];
     try {
       const result: any = await query(sql, params);
