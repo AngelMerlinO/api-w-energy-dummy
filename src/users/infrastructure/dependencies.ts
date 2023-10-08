@@ -1,7 +1,9 @@
 import { CreateUsersUseCase } from "../application/CreateUsersUseCase";
 import { LoginUseCase } from "../application/LoginUseCase";
+
 import { CreateUsersController } from "./controllers/CreateUsersController";
 import { LoginUserController } from "./controllers/LoginUserController";
+
 import { MysqlUsersRepository } from "./MysqlUsersRepository";
 
 export const mysqlUsersRepository = new MysqlUsersRepository();

@@ -16,7 +16,7 @@
   "include": [
     "src/**/**/**.ts",
     "tests/**/**.ts",
-    "playground/**/**.ts",
+    "playground/**/**.ts", "src/device/infrastucture/Mysql",
   ],
   "exclude": ["node_modules"]
 }
