@@ -4,7 +4,7 @@ import { UsersRepository } from "../domain/UsersRepository";
 
 export class MysqlUsersRepository implements UsersRepository {
   async login(mail: string, password: string): Promise<Users | null> {
-    const sql = "SELECT * FROM usuario WHERE mail = ?";
+    const sql = "SELECT * FROM Users WHERE mail = ?";
     const params: any[] = [mail];
 
     try {
