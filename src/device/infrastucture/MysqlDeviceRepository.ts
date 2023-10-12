@@ -40,7 +40,27 @@ export class MysqlDeviceRepository implements DeviceRepository {
       return null;
     }
   }
-  
 
+  async createDevice( idUser: number, name: string, description: string, status: boolean): Promise<Device | null> {
+    const sql = "INSERT INTO Devices (idUser, name, description, status) VALUES (?, ?, ?, ?)";
+    const params: any[] = [idUser, name, description, status];
+    try {
+      // Imprime los datos que se están insertando antes de ejecutar la consulta
+      console.log("Datos a insertar en Devices:");
+      console.log("idUser:", idUser);
+      console.log("name:", name);
+      console.log("description:", description);
+      console.log("status:", status);
+  
+      const result: any = await query(sql, params);
+      const insertedId = result[0].insertId;
+  
+      return new Device(insertedId, idUser, name, description, status);
+    } catch (error) {
+      // En caso de error, imprime el error
+      console.error("Error al insertar en Devices:", error);
+      return null;
+    }
+  }  
 }
 
