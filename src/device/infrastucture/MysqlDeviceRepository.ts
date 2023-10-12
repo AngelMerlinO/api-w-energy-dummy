@@ -15,10 +15,32 @@ export class MysqlDeviceRepository implements DeviceRepository {
 
       console.log("Resultado de la consulta:", devicesData);
 
-      return devicesData.map((device: any) => new Device(device.id, device.idUser, device.name, device.description));
+      return devicesData.map((device: any) => new Device(device.id, device.idUser, device.name, device.description,device.status));
     } catch (error) {
       return [];
     }
   }
+
+  async getStatusDevice(id: number): Promise<Device | null> {
+    const sql = "SELECT status FROM Devices WHERE id = ?";
+    const params: any[] = [id];
+  
+    try {
+      const [data]: any = await query(sql, params);
+  
+      if (data && data) {
+        console.log("Resultado de la consulta:", data); // Imprime el resultado
+        return data;
+      } else {
+        console.log("No se encontró un estado para el ID:", id); // Imprime un mensaje en caso de no encontrar datos
+        return null;
+      }
+    } catch (error) {
+      console.error("Error al obtener el estado del dispositivo:", error); // Imprime un mensaje de error
+      return null;
+    }
+  }
+  
+
 }
 

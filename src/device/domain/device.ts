@@ -3,7 +3,8 @@ export class Device {
       readonly id: number,
       readonly idUser: number,
       readonly name: string,
-      readonly description: string
+      readonly description: string,
+      readonly status:boolean
     ) {}
   }
   
