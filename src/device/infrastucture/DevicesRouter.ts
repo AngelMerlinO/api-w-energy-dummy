@@ -5,5 +5,5 @@ import { createDeviceController, getDeviceController, getStatusDeviceController 
 export const deviceRouter = express.Router();
 
 deviceRouter.get("/",getDeviceController.run.bind(getDeviceController));
-deviceRouter.get("/status",getStatusDeviceController.run.bind(getStatusDeviceController))
+deviceRouter.get("/status/:deviceID",getStatusDeviceController.run.bind(getStatusDeviceController))
 deviceRouter.post("/register",createDeviceController.run.bind(createDeviceController));

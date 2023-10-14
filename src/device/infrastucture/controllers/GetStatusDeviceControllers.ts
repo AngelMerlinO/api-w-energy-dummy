@@ -6,7 +6,7 @@ export class GetStatusDeviceController {
 
   async run(req: Request, res: Response) {
     try {
-      const { id } = req.body; // Obtenemos el 'id' del cuerpo de la solicitud
+      const id  = req.params.deviceID; // Obtenemos el 'id' del cuerpo de la solicitud
 
       if (!id) {
         // Verificamos que se haya proporcionado el 'id' en el cuerpo
