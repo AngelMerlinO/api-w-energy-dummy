@@ -6,7 +6,8 @@ export class GetStatusDeviceController {
 
   async run(req: Request, res: Response) {
     try {
-      const id  = req.params.deviceID; // Obtenemos el 'id' del cuerpo de la solicitud
+      const id  = Number(req.params.deviceID); // Obtenemos el 'id' del cuerpo de la solicitud
+      console.log(id);
 
       if (!id) {
         // Verificamos que se haya proporcionado el 'id' en el cuerpo
@@ -19,15 +20,11 @@ export class GetStatusDeviceController {
 
       // Llama al caso de uso para obtener el estado (status) del dispositivo correspondiente al 'id'
       const device = await this.GetStatusDeviceUseCase.getStatusDevice(id);
-
       if (device) {
         // Si se encuentra el dispositivo, envía una respuesta exitosa con el estado
         res.status(200).send({
           status: "success",
-          data: {
-            id: device.id,
-            status: device.status, // Suponiendo que el estado se llama 'status' en tu modelo de dispositivo
-          },
+          deviceStatus: device.status,
         });
       } else {
         // Si no se encuentra el dispositivo, envía una respuesta indicando que no se encontró el dispositivo

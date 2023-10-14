@@ -30,7 +30,7 @@ export class MysqlDeviceRepository implements DeviceRepository {
   
       if (data && data) {
         console.log("Resultado de la consulta:", data); // Imprime el resultado
-        return data;
+        return data[0];
       } else {
         console.log("No se encontró un estado para el ID:", id); // Imprime un mensaje en caso de no encontrar datos
         return null;
