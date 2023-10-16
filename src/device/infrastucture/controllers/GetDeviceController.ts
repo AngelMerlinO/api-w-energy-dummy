@@ -7,7 +7,6 @@ export class GetDevicesController {
   async run(req: Request, res: Response) {
     try {
       const { idUser } = req.body; // Obtenemos el idUser del cuerpo de la solicitud
-
       if (!idUser) {
         // Verificamos que se haya proporcionado el idUser en el cuerpo
         res.status(400).send({
@@ -19,7 +18,6 @@ export class GetDevicesController {
 
       // Llama al caso de uso para obtener todos los dispositivos relacionados con idUser
       const devices = await this.getDeviceUseCase.getDevicesByUserId(idUser);
-
       if (devices.length > 0) {
         // Si se encuentran dispositivos, envía una respuesta exitosa
         res.status(200).send({
