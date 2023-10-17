@@ -1,5 +1,5 @@
 import { Register } from "../domain/register";
-import { RegisterRepository } from "../domain/registerRepository";
+import { RegisterRepository } from "../domain/RegisterRepository"
 
 export class CreateRegisterUsecase{
     constructor(readonly registerRepository: RegisterRepository){}

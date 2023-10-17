@@ -1,6 +1,6 @@
 import { query } from "../../database/mysql";
 import { Register } from "../domain/register";
-import { RegisterRepository } from "../domain/registerRepository";
+import { RegisterRepository } from "../domain/RegisterRepository";
 
 export class MysqlRegisterRepository implements RegisterRepository{
     async createRegister(
