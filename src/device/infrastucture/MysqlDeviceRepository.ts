@@ -14,7 +14,7 @@ export class MysqlDeviceRepository implements DeviceRepository {
       console.log("Resultados de la consulta SQL:", result); // Verifica los resultados de la consulta
 
       const devicesData: Device[] = result[0].map((row: any) => {
-        return new Device(row.id, row.idUser, row.name, row.description, row.status);
+        return new Device(row.id, row.idUser, row.name, row.description, row.status,row.category);
       });
       
       console.log("Dispositivos mapeados:", devicesData); // Verifica los dispositivos mapeados
@@ -49,7 +49,7 @@ export class MysqlDeviceRepository implements DeviceRepository {
     }
   }
 
-  async createDevice( idUser: number, name: string, description: string, status: boolean): Promise<Device | null> {
+  async createDevice( idUser: number, name: string, description: string, status: boolean,category:string): Promise<Device | null> {
     const sql = "INSERT INTO Devices (idUser, name, description, status) VALUES (?, ?, ?, ?)";
     const params: any[] = [idUser, name, description, status];
     try {
@@ -63,7 +63,7 @@ export class MysqlDeviceRepository implements DeviceRepository {
       const result: any = await query(sql, params);
       const insertedId = result[0].insertId;
   
-      return new Device(insertedId, idUser, name, description, status);
+      return new Device(insertedId, idUser, name, description, status,category);
     } catch (error) {
       // En caso de error, imprime el error
       console.error("Error al insertar en Devices:", error);

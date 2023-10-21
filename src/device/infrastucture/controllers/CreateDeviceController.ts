@@ -5,10 +5,10 @@ export class CreateDeviceController {
   constructor(readonly createDeviceUseCase: CreateDeviceUseCase) {}
 
   async run(req: Request, res: Response) {
-    const {idUser, name, description, status } = req.body;
+    const {idUser, name, description, status,category} = req.body;
 
     try {
-      const device = await this.createDeviceUseCase.run(idUser, name, description, status);
+      const device = await this.createDeviceUseCase.run(idUser, name, description, status,category);
 
       if (device) {
         // Código HTTP: 201 -> Creado
@@ -19,6 +19,7 @@ export class CreateDeviceController {
             name: device.name,
             description: device.description,
             status: device.status,
+            category:category
           },
         });
       } else {
