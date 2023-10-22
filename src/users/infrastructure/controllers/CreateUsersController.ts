@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import { CreateUsersUseCase } from "../../application/CreateUsersUseCase";
-//import { Users } from "../../domain/Users";
 
 export class CreateUsersController {
   constructor(readonly createUsersUseCase: CreateUsersUseCase) {}

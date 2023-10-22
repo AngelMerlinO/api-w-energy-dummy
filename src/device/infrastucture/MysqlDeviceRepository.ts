@@ -70,5 +70,48 @@ export class MysqlDeviceRepository implements DeviceRepository {
       return null;
     }
   }  
+  async putStatus(id: number): Promise<Device | null> {
+    // Obtén el dispositivo con el ID proporcionado
+    const getDeviceSql = "SELECT * FROM Devices WHERE id = ?";
+    const getDeviceParams: any[] = [id];
+  
+    try {
+      const [deviceData]: any = await query(getDeviceSql, getDeviceParams);
+      console.log("🚀 ~ file: MysqlDeviceRepository.ts:80 ~ MysqlDeviceRepository ~ putStatus ~ deviceData:", deviceData)
+  
+      if (deviceData && deviceData.length > 0) {
+        const device: Device = deviceData[0];
+  
+        const newStatus = device.status ? 0 : 1;
+        const updateStatusSql = "UPDATE Devices SET status = ? WHERE id = ?";
+        const updateStatusParams: any[] = [newStatus, id];
+        const result: any = await query(updateStatusSql, updateStatusParams);
+        console.log("🚀 ~ file: MysqlDeviceRepository.ts:90 ~ MysqlDeviceRepository ~ putStatus ~ result:", result)
+        //cambio de status
+        const newDeviceData = deviceData.map((device: Device) => {
+          return {
+            ...device,
+            status: newStatus
+          };
+        });
+  
+        if (result[0].affectedRows > 0) {
+  
+          console.log(`Se ha cambiado el estado del dispositivo con ID ${id} a ${newStatus}`);
+          return newDeviceData;
+        } else {
+          console.log(`No se pudo cambiar el estado del dispositivo con ID ${id}`);
+          return null;
+        }
+      } else {
+        console.log(`No se encontró un dispositivo con ID ${id}`);
+        return null;
+      }
+    } catch (error) {
+      console.error(`Error al cambiar el estado del dispositivo con ID ${id}:`, error);
+      return null;
+    }
+  }
+  
+  
 }
-

@@ -6,18 +6,18 @@ export class GetDevicesController {
 
   async run(req: Request, res: Response) {
     try {
-      const { idUser } = req.body; // Obtenemos el idUser del cuerpo de la solicitud
-      if (!idUser) {
-        // Verificamos que se haya proporcionado el idUser en el cuerpo
+      const { idUser } = req.params;
+      const parsedIdUser = parseInt(idUser, 10);
+
+      if (isNaN(parsedIdUser)) {
         res.status(400).send({
           status: "error",
-          message: "El campo 'idUser' es obligatorio en el cuerpo de la solicitud.",
+          message: "El parámetro 'idUser' debe ser un número entero válido.",
         });
         return;
       }
-
       // Llama al caso de uso para obtener todos los dispositivos relacionados con idUser
-      const devices = await this.getDeviceUseCase.getDevicesByUserId(idUser);
+      const devices = await this.getDeviceUseCase.getDevicesByUserId(parsedIdUser);
       if (devices.length > 0) {
         // Si se encuentran dispositivos, envía una respuesta exitosa
         res.status(200).send({
@@ -27,6 +27,8 @@ export class GetDevicesController {
             idUser: device.idUser,
             name: device.name,
             description: device.description,
+            status: device.status,
+            category: device.category,
           })),
         });
       } else {
