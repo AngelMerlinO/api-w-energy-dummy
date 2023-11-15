@@ -1,7 +1,6 @@
 import express from "express";
 
-import { loginUserController } from "./dependencies";
-import { createUsersController } from "./dependencies";
+import { loginUserController, createUsersController } from "./dependencies";
 
 
 export const usersRouter = express.Router();
