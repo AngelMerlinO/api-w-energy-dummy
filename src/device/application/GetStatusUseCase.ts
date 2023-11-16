@@ -6,7 +6,7 @@ export class GetStatusDeviceUseCase {
 
   async run (id: number): Promise<Device | null> {
     try {
-      const status = await this.DeviceRepository.putStatus(id);
+      const status = await this.DeviceRepository.getStatusDevice(id);
       return status;
     } catch (error) {
       console.error("Error al obtener el estado del dispositivo:", error);

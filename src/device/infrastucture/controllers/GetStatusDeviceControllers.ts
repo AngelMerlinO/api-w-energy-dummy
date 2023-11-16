@@ -6,14 +6,14 @@ export class GetStatusDeviceController {
 
   async run(req: Request, res: Response) {
     try {
-      const id  = Number(req.params);
+      const id = Number(req.params.deviceID); // Correctly extracting deviceID from route parameters
       console.log(id);
-
+      // const { id } = req.body;
       if (!id) {
         // Verificamos que se haya proporcionado el 'id' en el cuerpo
         res.status(400).send({
           status: "error",
-          message: "El campo 'id' es obligatorio en el cuerpo de la solicitud.",
+          message: "El campo 'id' es obligatorio ",
         });
         return;
       }
