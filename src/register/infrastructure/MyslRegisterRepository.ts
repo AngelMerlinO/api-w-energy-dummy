@@ -109,52 +109,51 @@ export class MysqlRegisterRepository implements RegisterRepository {
       }
   }
 
-    async getRegistersFoco(): Promise<any> {
-        const sql = 'SELECT * FROM Register WHERE idDevice = 1';
+  async getRegistersFoco(): Promise<any> {
+    const sql = 'SELECT * FROM Register WHERE idDevice = 1';
 
-        try {
-            const result: any = await query(sql, []);
+    try {
+        const result: any = await query(sql, []);
 
-            // Extraer solo los registros (ignorar la segunda parte que contiene los nombres de las columnas)
-            const registros = Array.isArray(result) && result.length > 0 ? result[0] : [];
-            // Calcula la eficiencia y el tiempo para cada registro
-            const eficiencia: number[] = [];
-            const tiempo: string[] = [];
+        const registros = Array.isArray(result) && result.length > 0 ? result[0] : [];
+        const eficiencia: number[] = [];
+        const tiempo: string[] = [];
 
-            registros.forEach((registro: any) => {
-                // Verifica si las columnas voltage, amps y power existen y no son undefined
-                if (registro.voltage !== undefined && registro.amps !== undefined && registro.power !== undefined) {
-                    const voltage = parseFloat(registro.voltage); // Convierte la cadena a número
-                    const current = parseFloat(registro.amps); // Convierte la cadena a número
-                    const outputPower = parseFloat(registro.power); // Convierte la cadena a número
+        registros.forEach((registro: any, index: number) => {
+            if (registro.voltage !== undefined && registro.amps !== undefined && registro.power !== undefined) {
+                const voltage = parseFloat(registro.voltage);
+                const current = parseFloat(registro.amps);
+                const outputPower = parseFloat(registro.power);
 
-                    // Verifica si la conversión fue exitosa antes de calcular la eficiencia
-                    if (!isNaN(voltage) && !isNaN(current) && !isNaN(outputPower)) {
-                        const inputPower = voltage * current;
-                        const efficiency = outputPower / inputPower;
-                        eficiencia.push(Math.round(efficiency * 100)); // Multiplica por 100 y redondea al entero más cercano
+                if (!isNaN(voltage) && !isNaN(current) && !isNaN(outputPower)) {
+                    const inputPower = voltage * current;
+                    const efficiency = outputPower / inputPower;
+                    eficiencia.push(Math.round(efficiency * 100));
+
+                    // Cambios para contar por minutos después de 10 minutos (600 segundos)
+                    if (index >= 120) {
+                        const minutes = Math.floor(index / 12);
+                        tiempo.push(`${minutes} Minutos`);
                     } else {
-                        console.error(`Error de conversión: voltage=${registro.voltage}, amps=${registro.amps}, power=${registro.power}`);
+                        tiempo.push(`${index * 5} Segundos`);
                     }
                 } else {
-                    console.error(`Valores indefinidos en voltage, amps o power en el registro:`, registro);
+                    console.error(`Error de conversión: voltage=${registro.voltage}, amps=${registro.amps}, power=${registro.power}`);
                 }
+            } else {
+                console.error(`Valores indefinidos en voltage, amps o power en el registro:`, registro);
+            }
+        });
 
-                tiempo.push(`${tiempo.length * 5} Segundos`); // Incrementa el tiempo en bloques de 5 segundos
-            });
+        let data = { "eficiencia": eficiencia, "Tiempo": tiempo };
+        console.log("🚀 ~ file: MyslRegisterRepository.ts:151 ~ MysqlRegisterRepository ~ getRegistersFoco ~ data:", data);
+        return data;
 
-
-
-            
-            let data = { "eficiencia": eficiencia, "Tiempo": tiempo };
-            console.log("🚀 ~ file: MyslRegisterRepository.ts:151 ~ MysqlRegisterRepository ~ getRegistersFoco ~ data:", data)
-            return data;
-
-        } catch (error) {
-            console.error(error);
-            throw new Error('Error fetching Foco registers.');
-        }
+    } catch (error) {
+        console.error(error);
+        throw new Error('Error fetching Foco registers.');
     }
+}
 
 
 
